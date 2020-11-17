@@ -29,6 +29,13 @@ class Caltech(VisionDataset):
           through the index
         - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
         '''
+        
+        assert(self.split in ['train','test'])
+        with open(f'./../{self.split}.txt') as f:
+            idx = f.readlines()
+        idx = [x.strip() for x in idx if 'background' not in x.lower()]
+        self.idx = zip(range(len(idx)),idx)
+        
 
     def __getitem__(self, index):
         '''
