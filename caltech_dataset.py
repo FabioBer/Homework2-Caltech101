@@ -48,7 +48,7 @@ class Caltech(VisionDataset):
             tup_idx_class[i] = dict_classes[idx[i].split('/')[0].strip()]
             
         # merge into (path,class) tuple list
-        self.tup_class_path = [(tup_idx_class[i][1],tup_idx_path[i][1]) for i in range(len(idx))]
+        self.split = [(tup_idx_class[i][1],tup_idx_path[i][1]) for i in range(len(idx))]
         
 
     def __getitem__(self, index):
@@ -60,9 +60,9 @@ class Caltech(VisionDataset):
         Returns:
             tuple: (sample, target) where target is class_index of the target class.
         '''
-        path = self.tup_class_path[index][1]
+        path = self.split[index][1]
         img = Image.open(open(os.path.join(self.root,path), 'rb'))
-        lab = self.tup_class_path[index][0]
+        lab = self.split[index][0]
         image, label = img, lab
                            # Provide a way to access image and label via index
                            # Image should be a PIL Image
@@ -79,5 +79,5 @@ class Caltech(VisionDataset):
         The __len__ method returns the length of the dataset
         It is mandatory, as this is used by several other components
         '''
-        length = len(self.tup_class_path) # Provide a way to get the length (number of elements) of the dataset
+        length = len(self.split) # Provide a way to get the length (number of elements) of the dataset
         return length
