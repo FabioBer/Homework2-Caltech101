@@ -48,7 +48,7 @@ class Caltech(VisionDataset):
             tup_idx_class[i] = dict_classes[idx[i].split('/')[0].strip()]
             
         # merge into (path,class) tuple list
-        self.tup_class_path = [(tup_idx_classi][1],tup_idx_path[i][1]) for i in range(len(idx))]
+        self.tup_class_path = [(tup_idx_class[i][1],tup_idx_path[i][1]) for i in range(len(idx))]
         
 
     def __getitem__(self, index):
