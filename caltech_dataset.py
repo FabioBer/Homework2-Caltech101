@@ -16,19 +16,26 @@ def pil_loader(path):
 
 
 class Caltech(VisionDataset):
-    def __init__(self, root, transform=None, target_transform=None):
+    def __init__(self, root, split=None, transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
 
         self.root = root
         self.transform = transform
         self.target_transform = target_transform
         
-        imgs = []
-        with open(os.path.join(root,'train.txt')) as f:
-            imgs = f.readlines()
-        with open(os.path.join(root,'test.txt')) as f:
-            for line in f:
-                imgs.append(line)
+        imgs = list()
+        if split is None:
+            with open(os.path.join(root,'train.txt')) as f:
+                imgs = f.readlines()
+            with open(os.path.join(root,'test.txt')) as f:
+                for line in f:
+                    imgs.append(line)
+        elif split=='train':
+            with open(os.path.join(root,'train.txt')) as f:
+                imgs = f.readlines()
+        elif split=='test':
+            with open(os.path.join(root,'test.txt')) as f:
+                imgs = f.readlines()
             
         self.images = list()
         for img in imgs:
